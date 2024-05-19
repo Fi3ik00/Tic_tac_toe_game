@@ -1,0 +1,16 @@
+.container {
+	background: rgb(121, 167, 226);
+	width: 904px;
+	height: 70px;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: translateY(50px);
+}
+
+.information {
+	color: azure;
+	font-size: 40px;
+}
