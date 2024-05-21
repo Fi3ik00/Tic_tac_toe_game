@@ -9,7 +9,7 @@ export const FieldLayout = ({ field, clickHandler }) => {
 						<div
 							className={styles.cell}
 							key={index}
-							onClick={(event) => clickHandler(event, index)}
+							onClick={() => clickHandler(index)}
 						>
 							{item}
 						</div>

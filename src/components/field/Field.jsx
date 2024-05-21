@@ -1,6 +1,17 @@
 import { FieldLayout } from './FieldLayout';
 import { useEffect } from 'react';
 
+const WIN_PATTERNS = [
+	[0, 1, 2],
+	[3, 4, 5],
+	[6, 7, 8],
+	[0, 3, 6],
+	[1, 4, 7],
+	[2, 5, 8],
+	[0, 4, 8],
+	[2, 4, 6],
+];
+
 export const Field = ({
 	field,
 	setField,
@@ -11,19 +22,8 @@ export const Field = ({
 	currentPlayer,
 	setCurrentPlayer,
 }) => {
-	const WIN_PATTERNS = [
-		[0, 1, 2],
-		[3, 4, 5],
-		[6, 7, 8],
-		[0, 3, 6],
-		[1, 4, 7],
-		[2, 5, 8],
-		[0, 4, 8],
-		[2, 4, 6],
-	];
-
-	const clickHandler = (event, index) => {
-		if (event.target && isGameEnded === false && event.target.textContent === '') {
+	const clickHandler = (index) => {
+		if (!isGameEnded && field[index] === '') {
 			let newField = [...field];
 			newField[index] = currentPlayer;
 			setField(newField);
@@ -43,17 +43,13 @@ export const Field = ({
 	};
 
 	useEffect(() => {
-		if (checkToWin() === false && field.includes('') === false) {
-			setIsDraw(true);
-		}
+		const win = checkToWin();
 
-		if (checkToWin() === true) {
+		if (!win && !field.includes('')) {
+			setIsDraw(true);
+		} else if (win) {
 			setIsGameEnded(true);
-		} else if (
-			checkToWin() === false &&
-			isGameEnded === false &&
-			field.some((x) => x === 'X' || x === '0')
-		) {
+		} else if (!win && !isGameEnded && field.some((x) => x === 'X' || x === '0')) {
 			setCurrentPlayer(currentPlayer === 'X' ? '0' : 'X');
 		}
 	}, [field]);
